@@ -155,7 +155,7 @@ function draw(data, fishTypeName, x, y, svg, lineFunc, height, color, tooltip) {
 
 function showToolTipMouse(d, i, dots) {
     d3.select(this).transition()
-        .style("stroke-width", "9px");
+        .style("stroke-width", "5px");
     d3.select("#tooltip").transition()
         .duration(200)
         .style("opacity", 0.9);
@@ -187,7 +187,7 @@ function hideToolTip(d) {
 function lineMouseOver(d) {
     var self = this;
     d3.select(this).transition()
-        .style("stroke-width", "9px");
+        .style("stroke-width", "5px");
 
     d3.select("#tooltip").transition()
         .duration(200)
