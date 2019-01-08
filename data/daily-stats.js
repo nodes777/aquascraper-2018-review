@@ -63936,7 +63936,7 @@ const dailyStats = {
         "stdDev": 0
       },
       "fwbettaswt": {
-        "avg": 644,
+        "avg": 25,
         "salesVolume": 4,
         "stdDev": 1072
       },

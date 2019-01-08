@@ -10,14 +10,14 @@ function formatStatData(json){
 	/* Format data, each line/category must be an entry in the array */
 	$.each(json.stats, function(date, objectDay){
 		/* Within a particular day*/
-    	console.log(date +" + "+ JSON.stringify(objectDay))
+    	//console.log(date +" + "+ JSON.stringify(objectDay))
     	//let fishTypeNames = Object.keys(objectDay); // array of just the names, doesnt need to run in this loop
         let numOfFishTypes = fishTypeNames.length;
     	date = parseTime(date);
         let runningTotalAvg = 0;
         let runningTotalStdDev = 0;
         let runningTotalSales = 0;
-    	console.log(date)
+    	//console.log(date)
 
     	$.each(fishTypeNames, function(index, fishTypeName){
     		/* Within a particular fish type*/
@@ -61,5 +61,6 @@ function formatStatData(json){
        
       });
     console.log(yearLineObj)
+    console.log(maxPoint)
     makeLineGraph(yearLineObj, maxPoint);
 }

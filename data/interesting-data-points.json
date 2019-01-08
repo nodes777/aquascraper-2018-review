@@ -1,0 +1,30 @@
+// highest single sale
+{
+    "bPrice": "$1500.00",
+    "date": "10/15",
+    "highBidder": "Jonesoda",
+    "item": "(12) L046 ZEBRA PLECOS! - 1 DOZEN GORGEOUS ZEBRAS!",
+    "reserveMet": "Yes",
+    "seller": "Euclidsfish"
+},
+{
+	"bPrice": "$1500.00",
+	"date": "9/24",
+	"highBidder": "Adz504",
+	"item": "***Proven Breeding Group L46 Zebra Plecos***",
+	"reserveMet": "Yes",
+	"seller": "Master_breeder"
+},
+
+
+// highest average day
+"fwflowerhorn": [
+            {
+              "bPrice": "$601.00",
+              "date": "5/18",
+              "highBidder": "Kuky",
+              "item": "5 inch red pearl peacock Masterpiece kingkamfa...",
+              "reserveMet": "Yes",
+              "seller": "Chonburiman"
+            }
+          ],

@@ -72,7 +72,7 @@ function makeLineGraph(thirtyDayLineObj, maxPoint, options){
         .attr("y", -10)
         .style("font-size", "24px")
         .style("text-anchor", "middle")
-        .text("Average Fish Value Over Time");
+        .text("Average Fish By Type Value Over Time");
 
    // $.each(thirtyDayLineObj, function(type){
      // draw(thirtyDayLineObj, type, x, y, svg, lineFunc, height, color, tooltip)
