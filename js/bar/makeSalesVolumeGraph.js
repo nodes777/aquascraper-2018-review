@@ -68,7 +68,7 @@ function makeSalesVolumeGraph(salesVolume){
                 .style("opacity", 0.9);
             tooltip .html(getReadableName(d[0])+" "+d[1])
                 .style("left", (rect.left) + "px")
-                .style("top", (svgRect.height + height + height) + "px");
+                .style("top", (svgRect.height + height) + "px");
             })
           .on("focusout", function(d) {
             tooltip.transition()
@@ -117,11 +117,11 @@ function makeSalesVolumeGraph(salesVolume){
       .text("Number of Sales");
 
     // Create X axis label
-    svg.append("text")
-      .attr("transform",
-            "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Fish");
+    // svg.append("text")
+    //   .attr("transform",
+    //         "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+    //   .style("text-anchor", "middle")
+    //   .text("Fish");
 
       // Define the div for the tooltip
     var tooltip = d3.select("body").append("div")

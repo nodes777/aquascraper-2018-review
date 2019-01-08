@@ -173,7 +173,7 @@ function showToolTip(d) {
         .style("opacity", 0.9);
     d3.select("#tooltip").html(`${getReadableName(d.item)} $${d.avg} on ${formatTime(d.date)}`)
         .style("left",  `${rect.left}px`)
-        .style("top",  `${rect.top + d3.select("svg").node().getBoundingClientRect().height-200}px`);
+        .style("top",  `${d3.select("svg").node().getBoundingClientRect().height}px`);
 }
 
 function hideToolTip(d) {
