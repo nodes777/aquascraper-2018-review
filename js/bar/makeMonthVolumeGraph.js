@@ -1,0 +1,161 @@
+/*jshint esversion: 6 */
+const formatted = [["Jan2018",4470],["Feb2018",4803],["Mar2018",1459],["Apr2018",1504],["May2018",1358],["Jun2018",1269],["Jul2018",1391],["Aug2018",1649],["Sep2018",1442],["Oct2018",1727],["Nov2018",938],["Dec2018",699],];
+
+makeMonthVolumeGraph(formatted);
+function makeMonthVolumeGraph(monthVolume){
+
+// Sorting the Data
+ //    const monthVolume = Object.keys(monthlySales).map(month => {
+ //        let days = Object.keys(monthlySales[month])
+ //        let monthSalesNum = days.map(day =>{
+ //            let hashes = Object.keys(monthlySales[month][day])
+ //            let salesPerDay = hashes.map(hash => {
+ //                let types = Object.keys(monthlySales[month][day][hash].allAuctions)
+ //                let typeSalesLength = types.map(type =>{
+ //                    let allAuctions = monthlySales[month][day][hash].allAuctions[type]
+ //                    let sold = allAuctions.filter(auction => {
+ //                        return auction.reserveMet == "Yes"
+ //                    })
+ //                    //console.log(sold.length)
+ //                    return sold.length
+ //                })
+ //                let salesPerDay = typeSalesLength.reduce((accumulator, currentValue) => accumulator + currentValue)
+ //                //console.log(hash + "   ---   " +salesPerDay)
+ //                return salesPerDay
+ //           })
+ //           return salesPerDay[0]
+ //        }).reduce((accumulator, currentValue) => accumulator + currentValue)
+ //        //console.log(monthSalesNum)
+ //        return [month, monthSalesNum]
+ //    })
+ // console.log(JSON.stringify(monthVolume))
+// Making the Graph
+
+   // set the dimensions and margins of the graph
+    var margin = {top: 30, right: 20, bottom: 160, left: 80},
+        width = getWidthOfGraph('#monthVolumeGraph') - margin.left - margin.right -20,
+        height = 720 - margin.top - margin.bottom;
+
+    // set the ranges, these are funcs that return a number, scaled to a particular domain and range
+    var x = d3.scaleBand() // scaleBand determines geometry of bars, splits the range into n bands (where n is the number of values in the domain array)
+              .range([0, width]) // provide a range of numbers
+              .padding(0.1); // provide padding
+    var y = d3.scaleLinear() // scaleLinear, input is domain, output is range (domain added below)
+              .range([height, 0]);
+
+    // Scale the range of the data in the domains
+    x.domain(monthVolume.map(function(month) { return month[0]; }));
+    y.domain([0, d3.max(monthVolume.map(function(month){ return month[1] }))]);
+
+    // append the svg object to the body of the page
+        // append a 'group' element to 'svg'
+        // moves the 'group' element to the top left margin
+    var svg = d3.select("#monthVolumeGraph").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+    // Create Bars
+    var bars = svg.selectAll(".categoryBar")
+        .data(monthVolume)
+      .enter().append("rect")
+        .attr("class", "bar categoryBar")
+        .attr("x", function(d) { return x((d[0])); })
+        .attr("width", x.bandwidth())
+        // set y and height to 0, they will grow in the transition
+        .attr("y", y(0))
+        .attr("height", 0)
+        .attr("tabindex", 0)
+        .attr("aria-label", function(d) { return `${d[0]} sold ${d[1]}`;});// Provide labels for screen readers;
+
+      bars.transition().duration(1500)//ease(d3.easeElastic)
+        .attr("y", function(d) { return y(d[1]); })
+        .attr("height", function(d) {return height - y(d[1]); });
+
+      bars.on("mouseover", function(d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0.9);
+            tooltip .html(d[0]+" "+d[1])
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+            })
+          .on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            })
+          .on("focus", function(d) {
+              var rect = this.getBoundingClientRect();
+              var svgRect = d3.select("#monthVolumeGraph").node().getBoundingClientRect();
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0.9);
+            tooltip .html(d[0]+" "+d[1])
+                .style("left", (rect.left) + "px")
+                .style("top", (svgRect.height + height) + "px");
+            })
+          .on("focusout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            });
+
+    // Add the x Axis
+    var xAxis = d3.axisBottom(x);
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .attr("class", "xAxis")
+        .selectAll("text")
+            .style("text-anchor", "end")
+            .style("font-size", "1.2em")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)")
+      .selectAll(".tick text")
+        // wrap the text so that the words don't overlap
+        .call(wrap, x.bandwidth())
+
+
+    // Add the y Axis
+    var yAxis = d3.axisLeft(y);
+    svg.append("g")
+        .attr("class", "yAxis")
+        .call(yAxis);
+
+    // Create Title
+	svg.append("text")
+		.attr("x", width / 2 )
+        .attr("y", -10)
+        .attr("id", "categoryBarTitle")
+        .style("text-anchor", "middle")
+        .text("Volume Per Month During 2018");
+
+    // Create Y axis label
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 20 - margin.bottom)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "0.1em")
+      .style("text-anchor", "middle")
+      .text("Number of Sales");
+
+    // Create X axis label
+    // svg.append("text")
+    //   .attr("transform",
+    //         "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+    //   .style("text-anchor", "middle")
+    //   .text("Fish");
+
+      // Define the div for the tooltip
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+
+}
+
+

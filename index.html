@@ -23,7 +23,8 @@
   </script>
 
   <script type="text/javascript" src="./data/daily-stats.js"></script>
-  <script  src="./data/fishTypeNames.js"></script>
+<!--   <script type="text/javascript" src="./data/monthly-sales.js"></script>
+ -->  <script  src="./data/fishTypeNames.js"></script>
   <script  src="./data/salesVolume.js"></script>
 
 	<script src="./js/utils/d3.min.js"></script>
@@ -243,10 +244,16 @@
     <div class="row ">
       <div class="col-md-12" id="salesVolumeGraph">
       <h2 class="text-center">Sales Volume by Fish Type</h2>
-              <div id="drop"></div>
       </div>
+    </div>
+    <div class="row ">
+      <div class="col-md-12" id="monthVolumeGraph">
+      <h2 class="text-center">Sales Volume by Month</h2>
+      </div>
+    </div>
         <script src="./js/index.js"></script>
         <script src="./js/bar/makeSalesVolumeGraph.js"></script>
+        <script src="./js/bar/makeMonthVolumeGraph.js"></script>
 
   </body>
 </html>
